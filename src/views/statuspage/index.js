@@ -7,13 +7,15 @@ import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Grid'
 
 
+
 const DemoGrid = styled(Grid)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
-    paddingTop: `${theme.spacing(1)} !important`
-  }
-}))
+    paddingTop: `${theme.spacing(1)} !important`,
+  },
+}));
 
 const StatusPage = () => {
+
   return (
     <Card>
       <CardHeader title='' titleTypographyProps={{ variant: 'h3' }} position="center" />
@@ -22,18 +24,18 @@ const StatusPage = () => {
           <Typography variant='h4'>
             Web Status
           </Typography>
-        </Grid><br></br>
+        </Grid>
+        <br></br>
         <Grid container spacing={6} justifyContent="center" textAlign={'justify'}>
           <DemoGrid item xs={5} sm={9}>
             <Typography variant="body1">
-              Mongo DB Connection :
-
+              Mongo DB Connection:
             </Typography>
           </DemoGrid>
         </Grid>
       </CardContent>
-    </Card >
-  )
-}
+    </Card>
+  );
+};
 
-export default StatusPage
+export default StatusPage;
