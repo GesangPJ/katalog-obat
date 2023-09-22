@@ -18,7 +18,7 @@ const navigation = () => {
     {
       title: 'Obat Generik',
       icon: Table,
-      path: '/obat-generik'
+      path: '/'
     },
     {
       title: 'Obat Herbal',
