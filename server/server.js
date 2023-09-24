@@ -9,7 +9,7 @@ const app = express()
 app.get('/api/mongodb-status', async (req, res) => {
   try {
     //Cek koneksi ke MongoDB pake MongoDB Driver
-    const isConnected = await checkMongoDBStatus() // Implement this function
+    const isConnected = await checkMongoDBStatus()
 
     // Respon status pake JSON
     res.json({ isConnected })
@@ -24,6 +24,6 @@ const port = process.env.PORT || 3001
 app.listen(port, async () => {
   console.log(`Server is running on port ${port}`)
 
-  // Connect to MongoDB when the server starts
+  // Mulai Koneksi ke MongoDB saat server start
   await connectToMongoDB()
 })
