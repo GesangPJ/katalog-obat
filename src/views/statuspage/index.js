@@ -13,20 +13,26 @@ const DemoGrid = styled(Grid)(({ theme }) => ({
 }));
 
 const StatusPage = () => {
-  const [mongoDBStatus, setMongoDBStatus] = useState(null);
+  const [mongoDBStatus, setMongoDBStatus] = useState('Loading'); // Default status
 
   useEffect(() => {
-    // Make a GET request to the backend to check the MongoDB status
-    fetch('/api/mongodb-status') // Assuming your API endpoint is relative to your frontend
-      .then((response) => response.json())
+    // Make a GET request to the back-end to check the MongoDB status
+    fetch('/api/mongodb-status') // Use the appropriate API endpoint
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        return response.json();
+      })
       .then((data) => {
         setMongoDBStatus(data.isConnected ? 'Connected' : 'Disconnected');
       })
       .catch((error) => {
-        console.error(error);
+        console.error('Error:', error);
         setMongoDBStatus('Error');
       });
-  }, []);
+  }, []); // Empty dependency array, so it runs once on component mount
 
   return (
     <Card>
