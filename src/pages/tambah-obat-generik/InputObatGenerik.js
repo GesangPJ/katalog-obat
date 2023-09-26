@@ -47,12 +47,15 @@ const FormObatGenerik = () => {
       if (response.ok) {
         // Data sukses ditambah ke MongoDB
         // Popup sukses dan hapus input field
-        setSuccessMessage('Obat added successfully.');
+        setSuccessMessage(`Obat ${namaObat} berhasil ditambahkan.`);
         setNamaObat('');
         setKomposisi('');
         setFormula('');
         setKegunaanUtama('');
         setDeskripsi('');
+        setTimeout(() => {
+          setSuccessMessage('');
+        }, 5000);
       } else {
         // Kalo Error
         console.error('Error adding obat.');
