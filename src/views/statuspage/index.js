@@ -14,10 +14,11 @@ const DemoGrid = styled(Grid)(({ theme }) => ({
 
 const StatusPage = () => {
   const [mongoDBStatus, setMongoDBStatus] = useState('Loading'); // Default status
+  const [serverStatus, setServerStatus] = useState('Loading');
 
   useEffect(() => {
     // Make a GET request to the back-end to check the MongoDB status
-    fetch('/api/mongodb-status') // Use the appropriate API endpoint
+    fetch('http://localhost:3001/api/mongodb-status') // Use the appropriate API endpoint
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -31,6 +32,22 @@ const StatusPage = () => {
       .catch((error) => {
         console.error('Error:', error);
         setMongoDBStatus('Error');
+      });
+
+    fetch('http://localhost:3001/api/server-status')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        return response.json();
+      })
+      .then((data) => {
+        setServerStatus(data.status);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        setServerStatus('Error');
       });
   }, []); // Empty dependency array, so it runs once on component mount
 
@@ -48,6 +65,9 @@ const StatusPage = () => {
           <DemoGrid item xs={5} sm={9}>
             <Typography variant="body1">
               MongoDB Connection: {mongoDBStatus}
+            </Typography>
+            <Typography variant="body1">
+              Server Status: {serverStatus}
             </Typography>
           </DemoGrid>
         </Grid>
