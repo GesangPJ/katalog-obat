@@ -69,6 +69,9 @@ const FormObatGenerik = () => {
     <Card>
       <CardHeader title='Form Tambah Obat Generik' titleTypographyProps={{ variant: 'h6' }} />
       <CardContent>
+        {successMessage && (
+          <Alert severity="success">{successMessage}</Alert>
+        )}
         <form onSubmit={handleSubmit}>
           <Grid container spacing={5}>
             <Grid item xs={12}>
