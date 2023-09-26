@@ -15,13 +15,14 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 
 const columns = [
   { id: 'namaObat', label: 'Nama Obat', minWidth: 170, sortable: true },
-  { id: 'komposisi', label: 'Komposisi', minWidth: 100 },
-  { id: 'formula', label: 'Formula', minWidth: 100 },
+  { id: 'komposisi', label: 'Komposisi', minWidth: 100, sortable: true },
+  { id: 'formula', label: 'Formula', minWidth: 100, sortable: true },
   {
     id: 'kegunaanUtama',
     label: 'Manfaat Utama',
     minWidth: 170,
     align: 'left',
+    sortable: true,
   },
   {
     id: 'aksi',
@@ -29,11 +30,41 @@ const columns = [
     minWidth: 170,
     align: 'right',
     format: (value) => value.toFixed(2),
+    sortable: false, // No sorting for this column
   },
 ];
 
 function createData(namaObat, komposisi, formula, kegunaanUtama) {
   return { namaObat, komposisi, formula, kegunaanUtama };
+}
+function stableSort(array, comparator) {
+  const stabilizedThis = array.map((el, index) => [el, index]);
+  stabilizedThis.sort((a, b) => {
+    const order = comparator(a[0], b[0]);
+    if (order !== 0) return order;
+
+    return a[1] - b[1];
+  });
+
+  return stabilizedThis.map((el) => el[0]);
+}
+
+// Get sorting order (asc or desc)
+function getComparator(order, orderBy) {
+  return order === 'desc'
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
+function descendingComparator(a, b, orderBy) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+
+  return 0;
 }
 
 const TableObatGenerik = () => {
@@ -56,6 +87,19 @@ const TableObatGenerik = () => {
   const handleSort = (columnId) => {
     const isAsc = sorting.column === columnId && sorting.direction === 'asc';
     setSorting({ column: columnId, direction: isAsc ? 'desc' : 'asc' });
+  };
+
+  const handleDetailClick = (namaObat) => {
+    // Construct the link with the target="_blank" attribute
+    return (
+      <Link href={`/detail-obat?namaObat=${namaObat}`} passHref>
+        <a target="_blank">
+          <Button variant='contained' color='primary'>
+            Detail
+          </Button>
+        </a>
+      </Link>
+    );
   };
 
   useEffect(() => {
@@ -98,16 +142,17 @@ const TableObatGenerik = () => {
                     onClick={() => column.sortable && handleSort(column.id)}
                   >
                     {column.label}
-                    {column.sortable && (
+                    {column.sortable && ( // Check if the column is sortable
                       <div style={{ display: 'flex', flexDirection: 'column', marginLeft: '4px' }}>
-                        {sorting.column === column.id && sorting.direction === 'asc' ? (
-                          <ArrowUpwardIcon fontSize="small" />
-                        ) : sorting.column === column.id && sorting.direction === 'desc' ? (
-                          <ArrowDownwardIcon fontSize="small" />
+                        {sorting.column === column.id ? ( // Check if this column is being sorted
+                          sorting.direction === 'asc' ? (
+                            <ArrowUpwardIcon fontSize="small" />
+                          ) : (
+                            <ArrowDownwardIcon fontSize="small" />
+                          )
                         ) : (
                           <div style={{ height: '24px' }} />
-                        )
-                        }
+                        )}
                       </div>
                     )}
                   </div>
