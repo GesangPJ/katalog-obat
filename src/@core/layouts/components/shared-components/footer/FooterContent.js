@@ -23,9 +23,9 @@ const FooterContent = () => {
           </Link>
           <Link
             target='_blank'
-            href='https://github.com/themeselection/materio-mui-react-nextjs-admin-template-free/blob/main/README.md'
+            href='https://github.com/GesangPJ/katalog-obat'
           >
-            Documentation
+            About
           </Link>
         </Box>
       )}
