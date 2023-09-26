@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import Card from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
 import CardHeader from '@mui/material/CardHeader';
@@ -12,61 +13,84 @@ const DemoGrid = styled(Grid)(({ theme }) => ({
   },
 }));
 
-const DetailObat = ({ obat }) => {
+const DetailObat = () => {
+  const router = useRouter();
+  const { _id } = router.query;
+  const [obat, setObat] = useState(null);
+
+  useEffect(() => {
+    if (_id) {
+      // Fetch the details of the selected obat based on the _id
+      fetch(`http://localhost:3001/api/obat-generik/${_id}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setObat(data);
+        })
+        .catch((error) => {
+          console.error('Error fetching obat details:', error);
+        });
+    }
+  }, [_id]);
+
   return (
     <Card>
       <CardHeader title='' titleTypographyProps={{ variant: 'h3' }} position="center" />
       <CardContent>
         <Grid container spacing={6} justifyContent="center" textAlign={'justify'} style={{ marginBottom: '10px' }}>
           <Typography variant='h2'>
-            Detail Obat
+            {obat?.namaObat}
           </Typography>
         </Grid>
-        <br></br>
-        <Grid container spacing={6} justifyContent="center" textAlign={'justify'} style={{ marginBottom: '10px' }}>
-          <Typography variant='h5'>
-            {obat.namaObat}
-          </Typography>
-        </Grid>
-        <br></br>
-        <Grid container spacing={6} justifyContent="center" textAlign={'justify'}>
-          <Grid item xs={12} sm={2} sx={{ display: 'flex', alignItems: 'center' }}>
-            <Typography>Nama Obat</Typography>
-          </Grid>
-          <DemoGrid item xs={12} sm={10}>
-            <Typography sx={{ marginBottom: 2 }}>
-              {obat.namaObat}
+        {obat ? (
+          <Grid container spacing={6} justifyContent="center" textAlign={'justify'} style={{ marginBottom: '10px' }}>
+            <Typography variant='h5'>
+
             </Typography>
-            <Typography variant='body2'>font-size: 16px / line-height: 24px / font-weight: 400</Typography>
-          </DemoGrid>
-          <Grid item xs={12} sm={2} sx={{ display: 'flex', alignItems: 'center' }}>
-            <Typography>Komposisi</Typography>
           </Grid>
-          <DemoGrid item xs={12} sm={10}>
-            <Typography sx={{ marginBottom: 2 }}>
-              {obat.komposisi}
-            </Typography>
-            <Typography variant='body2'>font-size: 16px / line-height: 24px / font-weight: 400</Typography>
-          </DemoGrid>
-          <Grid item xs={12} sm={2} sx={{ display: 'flex', alignItems: 'center' }}>
-            <Typography>Manfaat Utama</Typography>
-          </Grid>
-          <DemoGrid item xs={12} sm={10}>
-            <Typography sx={{ marginBottom: 2 }}>
-              {obat.kegunaanUtama}
-            </Typography>
-            <Typography variant='body2'>font-size: 16px / line-height: 24px / font-weight: 400</Typography>
-          </DemoGrid>
-          <Grid item xs={12} sm={2} sx={{ display: 'flex', alignItems: 'center' }}>
-            <Typography>Deskripsi </Typography>
-          </Grid>
-          <DemoGrid item xs={12} sm={10}>
-            <Typography sx={{ marginBottom: 2 }}>
-              {obat.deskripsi}
-            </Typography>
-            <Typography variant='body2'>font-size: 16px / line-height: 24px / font-weight: 400</Typography>
-          </DemoGrid>
-        </Grid>
+        ) : (
+          <Typography variant='body1'>Loading...</Typography>
+        )}
+        {obat ? (
+          <>
+            <br></br>
+            <Grid container spacing={6} justifyContent="center" textAlign={'justify'}>
+              <Grid item xs={12} sm={2} sx={{ display: 'flex', alignItems: 'center' }}>
+                <Typography>Nama Obat</Typography>
+              </Grid>
+              <DemoGrid item xs={12} sm={10}>
+                <Typography sx={{ marginBottom: 2 }}>
+
+                </Typography>
+                <Typography variant='body2'>{obat?.namaObat}</Typography>
+              </DemoGrid>
+              <Grid item xs={12} sm={2} sx={{ display: 'flex', alignItems: 'center' }}>
+                <Typography>Komposisi</Typography>
+              </Grid>
+              <DemoGrid item xs={12} sm={10}>
+                <Typography sx={{ marginBottom: 2 }}>
+                </Typography>
+                <Typography variant='body2'>{obat?.komposisi}</Typography>
+              </DemoGrid>
+              <Grid item xs={12} sm={2} sx={{ display: 'flex', alignItems: 'center' }}>
+                <Typography>Manfaat Utama</Typography>
+              </Grid>
+              <DemoGrid item xs={12} sm={10}>
+                <Typography sx={{ marginBottom: 2 }}>
+                </Typography>
+                <Typography variant='body2'>{obat?.kegunaanUtama}</Typography>
+              </DemoGrid>
+              <Grid item xs={12} sm={2} sx={{ display: 'flex', alignItems: 'center' }}>
+                <Typography>Deskripsi</Typography>
+              </Grid>
+              <DemoGrid item xs={12} sm={10}>
+                <Typography sx={{ marginBottom: 2 }}>
+
+                </Typography>
+                <Typography variant='body2'>{obat?.deskripsi}</Typography>
+              </DemoGrid>
+            </Grid>
+          </>
+        ) : null}
       </CardContent>
     </Card>
   );

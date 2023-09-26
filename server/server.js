@@ -60,6 +60,30 @@ app.get('/api/obat-generik', async (req, res) => {
   }
 });
 
+// Ambil Detail Data Obat berdasarkan row yang dipilih user
+// Ambil Detail Data Obat berdasarkan row yang dipilih user
+app.get('/api/obat-generik/:_id', async (req, res) => {
+  const { _id } = req.params;
+
+  try {
+    const db = await connectToMongoDB();
+    const obatGenerikCollection = db.collection('obat_generik');
+
+    // Find the obat by _id
+    //const obat = await obatGenerikCollection.findOne({ _id });
+    const obat = await obatGenerikCollection.findOne('651261460baa91bd522b079b');
+
+    if (!obat) {
+      return res.status(404).json({ error: 'Obat not found' });
+    }
+
+    res.json(obat);
+  } catch (error) {
+    console.error('Error fetching obat generik data:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 // Set Port buat server
 const port = process.env.PORT || 3001;
 app.listen(port, async () => {
