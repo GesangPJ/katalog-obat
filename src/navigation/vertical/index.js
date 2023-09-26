@@ -49,22 +49,27 @@ const navigation = () => {
       title: 'Admin Settings',
       icon: AdminPanelSettings,
       path: '/account-settings'
-    },
+    }
+
+    /*
+        {
+          title: 'Login',
+          icon: Login,
+          path: '/pages/login',
+          openInNewTab: true
+        },
+        {
+          title: 'Register',
+          icon: AccountPlusOutline,
+          path: '/pages/register',
+          openInNewTab: true
+        },
+
     {
-      title: 'Login',
-      icon: Login,
-      path: '/pages/login',
-      openInNewTab: true
-    },
-    {
-      title: 'Register',
-      icon: AccountPlusOutline,
-      path: '/pages/register',
-      openInNewTab: true
-    },
-    {
-      sectionTitle: 'User Interface'
-    },
+      sectionTitle: ''
+    }
+
+
     {
       title: 'Typography',
       icon: FormatLetterCase,
@@ -89,7 +94,7 @@ const navigation = () => {
       icon: CubeOutline,
       title: 'Form Layouts',
       path: '/form-layouts'
-    }
+    }*/
   ]
 }
 
