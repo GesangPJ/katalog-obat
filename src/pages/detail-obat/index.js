@@ -59,9 +59,8 @@ const DetailObat = () => {
               </Grid>
               <DemoGrid item xs={12} sm={10}>
                 <Typography sx={{ marginBottom: 2 }}>
-
                 </Typography>
-                <Typography variant='body2'>{obat?.namaObat}</Typography>
+                <Typography variant='body1'>{obat?.namaObat}</Typography>
               </DemoGrid>
               <Grid item xs={12} sm={2} sx={{ display: 'flex', alignItems: 'center' }}>
                 <Typography>Komposisi</Typography>
@@ -69,7 +68,7 @@ const DetailObat = () => {
               <DemoGrid item xs={12} sm={10}>
                 <Typography sx={{ marginBottom: 2 }}>
                 </Typography>
-                <Typography variant='body2'>{obat?.komposisi}</Typography>
+                <Typography variant='body1'>{obat?.komposisi}</Typography>
               </DemoGrid>
               <Grid item xs={12} sm={2} sx={{ display: 'flex', alignItems: 'center' }}>
                 <Typography>Formula</Typography>
@@ -77,7 +76,7 @@ const DetailObat = () => {
               <DemoGrid item xs={12} sm={10}>
                 <Typography sx={{ marginBottom: 2 }}>
                 </Typography>
-                <Typography variant='body2'>{obat?.formula}</Typography>
+                <Typography variant='body1'>{obat?.formula}</Typography>
               </DemoGrid>
               <Grid item xs={12} sm={2} sx={{ display: 'flex', alignItems: 'center' }}>
                 <Typography>Manfaat Utama</Typography>
@@ -85,7 +84,7 @@ const DetailObat = () => {
               <DemoGrid item xs={12} sm={10}>
                 <Typography sx={{ marginBottom: 2 }}>
                 </Typography>
-                <Typography variant='body2'>{obat?.kegunaanUtama}</Typography>
+                <Typography variant='body1'>{obat?.kegunaanUtama}</Typography>
               </DemoGrid>
               <Grid item xs={12} sm={2} sx={{ display: 'flex', alignItems: 'center' }}>
                 <Typography>Deskripsi</Typography>
@@ -94,7 +93,7 @@ const DetailObat = () => {
                 <Typography sx={{ marginBottom: 2 }}>
 
                 </Typography>
-                <Typography variant='body2'>{obat?.deskripsi}</Typography>
+                <Typography variant='body1'>{obat?.deskripsi}</Typography>
               </DemoGrid>
             </Grid>
           </>
