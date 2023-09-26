@@ -55,10 +55,16 @@ const TableObatGenerik = () => {
   const router = useRouter();
 
   const handleDetailClick = (namaObat) => {
-    router.push({
-      pathname: '/detail-obat',
-      query: { namaObat },
-    });
+    // Construct the link with the target="_blank" attribute
+    return (
+      <Link href={`/detail-obat?namaObat=${namaObat}`} passHref>
+        <a target="_blank">
+          <Button variant='contained' color='primary'>
+            Detail
+          </Button>
+        </a>
+      </Link>
+    );
   };
 
   useEffect(() => {
@@ -96,40 +102,27 @@ const TableObatGenerik = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.length > 0 ? (
-              data.map((row) => (
-                <TableRow hover role='checkbox' tabIndex={-1} key={row._id}>
-                  {columns.map((column) => {
-                    const value = row[column.id];
-                    if (column.id === 'aksi') {
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          <Button
-                            variant='contained'
-                            color='primary'
-                            onClick={() => handleDetailClick(row.namaObat)}
-                          >
-                            Detail
-                          </Button>
-                        </TableCell>
-                      );
-                    }
-
+            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+              <TableRow hover role='checkbox' tabIndex={-1} key={row.namaObat}>
+                {columns.map((column) => {
+                  const value = row[column.id];
+                  if (column.id === 'aksi') {
                     return (
                       <TableCell key={column.id} align={column.align}>
                         {column.format && typeof value === 'number' ? column.format(value) : value}
+                        {handleDetailClick(row.namaObat)}
                       </TableCell>
                     );
-                  })}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={columns.length} align='center'>
-                  No data available
-                </TableCell>
+                  }
+
+                  return (
+                    <TableCell key={column.id} align={column.align}>
+                      {column.format && typeof value === 'number' ? column.format(value) : value}
+                    </TableCell>
+                  );
+                })}
               </TableRow>
-            )}
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
