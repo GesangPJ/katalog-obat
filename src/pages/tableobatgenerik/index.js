@@ -1,5 +1,7 @@
 // ** React Imports
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import Button from '@mui/material/Button';
+import Link from 'next/dist/client/link';
 
 // ** MUI Imports
 import Paper from '@mui/material/Paper'
@@ -12,10 +14,11 @@ import TableContainer from '@mui/material/TableContainer'
 import TablePagination from '@mui/material/TablePagination'
 
 const columns = [
-  { id: 'nama', label: 'Nama Obat', minWidth: 170 },
+  { id: 'namaObat', label: 'Nama Obat', minWidth: 170 },
   { id: 'komposisi', label: 'Komposisi', minWidth: 100 },
+  { id: 'formula', label: 'Formula', minWidth: 100 },
   {
-    id: 'manfaat',
+    id: 'kegunaanUtama',
     label: 'Manfaat Utama',
     minWidth: 170,
     align: 'right',
@@ -29,49 +32,55 @@ const columns = [
     format: value => value.toFixed(2)
   }
 ]
-function createData(nama, komposisi, manfaat, aksi) {
 
-
-  return { nama, komposisi, manfaat, aksi }
+function createData(namaObat, komposisi, formula, kegunaanUtama) {
+  return { namaObat, komposisi, formula, kegunaanUtama };
 }
 
-const rows = [
-  createData('Italy', 'IT', 60483973),
-  createData('United States', 'US', 327167434),
-  createData('Canada', 'CA', 37602103),
-  createData('Australia', 'AU', 25475400),
-  createData('Germany', 'DE', 83019200),
-  createData('Ireland', 'IE', 4857000),
-  createData('Mexico', 'MX', 126577691),
-  createData('Japan', 'JP', 126317000),
-  createData('France', 'FR', 67022000),
-  createData('United Kingdom', 'GB', 67545757),
-  createData('Russia', 'RU', 146793744),
-  createData('Nigeria', 'NG', 200962417),
-  createData('Brazil', 'BR', 210147125)
-]
 
 const TableObatGenerik = () => {
   // ** States
-  const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [data, setData] = useState([]); // Declare data state
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage)
-  }
+    setPage(newPage);
+  };
 
-  const handleChangeRowsPerPage = event => {
-    setRowsPerPage(+event.target.value)
-    setPage(0)
-  }
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/api/obat-generik');
+        if (response.ok) {
+          const result = await response.json();
+          setData(result); // Update data state
+        } else {
+          console.error('Error fetching obat generik data.');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const rows = data.map((row) => createData(row.namaObat, row.komposisi, row.formula, row.kegunaanUtama));
 
   return (
+
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label='sticky table'>
           <TableHead>
             <TableRow>
-              {columns.map(column => (
+              {columns.map((column) => (
                 <TableCell key={column.id} align={column.align} sx={{ minWidth: column.minWidth }}>
                   {column.label}
                 </TableCell>
@@ -79,35 +88,52 @@ const TableObatGenerik = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
-              return (
-                <TableRow hover role='checkbox' tabIndex={-1} key={row.code}>
-                  {columns.map(column => {
-                    const value = row[column.id]
+            {data.length > 0 ? (
+              data.map((row) => (
+                <TableRow hover role='checkbox' tabIndex={-1} key={row._id}>
+                  {columns.map((column) => {
+                    const value = row[column.id];
+                    if (column.id === 'aksi') {
+                      return (
+                        <TableCell key={column.id} align={column.align}>
+                          <Link href={`/detail-obat/${row._id}`}>
+                            <Button variant='contained' color='primary'>
+                              Detail
+                            </Button>
+                          </Link>
+                        </TableCell>
+                      );
+                    }
 
                     return (
                       <TableCell key={column.id} align={column.align}>
                         {column.format && typeof value === 'number' ? column.format(value) : value}
                       </TableCell>
-                    )
+                    );
                   })}
                 </TableRow>
-              )
-            })}
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={columns.length} align='center'>
+                  No data available
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component='div'
-        count={rows.length}
+        count={data.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </Paper>
-  )
+  );
 }
 
 export default TableObatGenerik
