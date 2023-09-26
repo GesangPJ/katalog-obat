@@ -62,8 +62,8 @@ app.get('/api/obat-generik', async (req, res) => {
 
 // Ambil Detail Data Obat berdasarkan row yang dipilih user
 // Ambil Detail Data Obat berdasarkan row yang dipilih user
-app.get('/api/obat-generik/:_id', async (req, res) => {
-  const { _id } = req.params;
+app.get('/api/obat-generik/:namaObat', async (req, res) => {
+  const { namaObat } = req.params;
 
   try {
     const db = await connectToMongoDB();
@@ -71,7 +71,7 @@ app.get('/api/obat-generik/:_id', async (req, res) => {
 
     // Find the obat by _id
     //const obat = await obatGenerikCollection.findOne({ _id });
-    const obat = await obatGenerikCollection.findOne('651261460baa91bd522b079b');
+    const obat = await obatGenerikCollection.findOne({ namaObat });
 
     if (!obat) {
       return res.status(404).json({ error: 'Obat not found' });

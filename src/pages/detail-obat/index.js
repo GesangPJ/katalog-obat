@@ -15,13 +15,13 @@ const DemoGrid = styled(Grid)(({ theme }) => ({
 
 const DetailObat = () => {
   const router = useRouter();
-  const { _id } = router.query;
+  const { namaObat } = router.query;
   const [obat, setObat] = useState(null);
 
   useEffect(() => {
-    if (_id) {
+    if (namaObat) {
       // Fetch the details of the selected obat based on the _id
-      fetch(`http://localhost:3001/api/obat-generik/${_id}`)
+      fetch(`http://localhost:3001/api/obat-generik/${namaObat}`)
         .then((response) => response.json())
         .then((data) => {
           setObat(data);
@@ -30,7 +30,7 @@ const DetailObat = () => {
           console.error('Error fetching obat details:', error);
         });
     }
-  }, [_id]);
+  }, [namaObat]);
 
   return (
     <Card>
@@ -70,6 +70,14 @@ const DetailObat = () => {
                 <Typography sx={{ marginBottom: 2 }}>
                 </Typography>
                 <Typography variant='body2'>{obat?.komposisi}</Typography>
+              </DemoGrid>
+              <Grid item xs={12} sm={2} sx={{ display: 'flex', alignItems: 'center' }}>
+                <Typography>Formula</Typography>
+              </Grid>
+              <DemoGrid item xs={12} sm={10}>
+                <Typography sx={{ marginBottom: 2 }}>
+                </Typography>
+                <Typography variant='body2'>{obat?.formula}</Typography>
               </DemoGrid>
               <Grid item xs={12} sm={2} sx={{ display: 'flex', alignItems: 'center' }}>
                 <Typography>Manfaat Utama</Typography>
