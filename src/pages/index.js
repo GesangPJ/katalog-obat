@@ -16,7 +16,6 @@ const ObatGenerik = () => {
             Tabel Obat Generik
           </Link>
         </Typography>
-        <Typography variant='body2'>Nama obat, kegunaan, komposisi</Typography>
       </Grid>
       <Grid item xs={12}>
         <Card>
