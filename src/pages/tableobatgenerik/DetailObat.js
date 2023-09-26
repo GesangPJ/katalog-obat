@@ -35,9 +35,9 @@ const DetailObat = ({ obat }) => {
           </Grid>
           <DemoGrid item xs={12} sm={10}>
             <Typography sx={{ marginBottom: 2 }}>
-              {obat.namaObat}
+
             </Typography>
-            <Typography variant='body2'>font-size: 16px / line-height: 24px / font-weight: 400</Typography>
+            <Typography variant='body1'>{obat.namaObat}</Typography>
           </DemoGrid>
           <Grid item xs={12} sm={2} sx={{ display: 'flex', alignItems: 'center' }}>
             <Typography>Komposisi</Typography>
@@ -46,7 +46,7 @@ const DetailObat = ({ obat }) => {
             <Typography sx={{ marginBottom: 2 }}>
               {obat.komposisi}
             </Typography>
-            <Typography variant='body2'>font-size: 16px / line-height: 24px / font-weight: 400</Typography>
+            <Typography variant='body1'>font-size: 16px / line-height: 24px / font-weight: 400</Typography>
           </DemoGrid>
           <Grid item xs={12} sm={2} sx={{ display: 'flex', alignItems: 'center' }}>
             <Typography>Manfaat Utama</Typography>
@@ -55,7 +55,7 @@ const DetailObat = ({ obat }) => {
             <Typography sx={{ marginBottom: 2 }}>
               {obat.kegunaanUtama}
             </Typography>
-            <Typography variant='body2'>font-size: 16px / line-height: 24px / font-weight: 400</Typography>
+            <Typography variant='body1'>font-size: 16px / line-height: 24px / font-weight: 400</Typography>
           </DemoGrid>
           <Grid item xs={12} sm={2} sx={{ display: 'flex', alignItems: 'center' }}>
             <Typography>Deskripsi </Typography>
@@ -64,7 +64,7 @@ const DetailObat = ({ obat }) => {
             <Typography sx={{ marginBottom: 2 }}>
               {obat.deskripsi}
             </Typography>
-            <Typography variant='body2'>font-size: 16px / line-height: 24px / font-weight: 400</Typography>
+            <Typography variant='body1'>font-size: 16px / line-height: 24px / font-weight: 400</Typography>
           </DemoGrid>
         </Grid>
       </CardContent>
