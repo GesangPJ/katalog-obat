@@ -1,5 +1,10 @@
 # KATALOG OBAT
 
-Website berbasis JS menggunakan NEXT.JS dan React.
+Website Katalog Obat berbasis React NextJS dan Backend Express JS.
 
-Digunakan untuk menampilkan dan menambahkan data Obat Generik & Herbal
+## Fitur
+
+### 1. Tabel Obat Generik
+
+<img src="https://github.com/GesangPJ/katalog-obat/blob/main/data/img/obat-generik-tab.jpg" width = "550" height = "300" >
+Tabel menampilkan obat generik
