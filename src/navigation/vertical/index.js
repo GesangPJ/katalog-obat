@@ -48,7 +48,7 @@ const navigation = () => {
     {
       title: 'Admin Settings',
       icon: AdminPanelSettings,
-      path: '/account-settings'
+      path: '/'
     }
 
     /*
