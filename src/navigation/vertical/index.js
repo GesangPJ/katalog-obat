@@ -8,6 +8,7 @@ import AccountPlusOutline from 'mdi-material-ui/AccountPlusOutline'
 import GoogleCirclesExtended from 'mdi-material-ui/GoogleCirclesExtended'
 import { MonitorHeart } from '@mui/icons-material'
 import { AddCircle } from '@mui/icons-material'
+import { ModeEdit } from '@mui/icons-material'
 import { AdminPanelSettings } from '@mui/icons-material'
 
 const navigation = () => {
@@ -46,12 +47,27 @@ const navigation = () => {
       openInNewTab: false
     },
     {
+      title: 'Edit Obat Generik',
+      icon: ModeEdit,
+      path: '/edit-obat-generik',
+      openInNewTab: false
+    },
+    {
+      title: 'Edit Obat Herbal',
+      icon: ModeEdit,
+      path: '/edit-obat-herbal',
+      openInNewTab: false
+    }
+
+
+    /*
+    {
       title: 'Admin Settings',
       icon: AdminPanelSettings,
       path: '/'
     }
 
-    /*
+
         {
           title: 'Login',
           icon: Login,
