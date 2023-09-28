@@ -6,6 +6,7 @@ import Button from '@mui/material/Button'
 import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
 // ** Layout Import
 import BlankLayout from 'src/@core/layouts/BlankLayout'
@@ -50,18 +51,18 @@ const Error500 = () => {
         <BoxWrapper>
           <Typography variant='h1'>500</Typography>
           <Typography variant='h5' sx={{ mb: 1, fontSize: '1.5rem !important' }}>
-            Internal server error 👨🏻‍💻
+            Internal server error
           </Typography>
-          <Typography variant='body2'>Oops, something went wrong!</Typography>
+          <Typography variant='body2'>Seems like Server or Backend is not Working or running</Typography>
         </BoxWrapper>
-        <Img height='487' alt='error-illustration' src='/images/pages/500.png' />
+        <ErrorOutlineIcon style={{ fontSize: 150 }} alt="error-illustration" />
+
         <Link passHref href='/'>
           <Button component='a' variant='contained' sx={{ px: 5.5 }}>
             Back to Home
           </Button>
         </Link>
       </Box>
-      <FooterIllustrations image={<TreeIllustration alt='tree' src='/images/pages/tree-3.png' />} />
     </Box>
   )
 }
