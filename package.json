@@ -15,20 +15,14 @@
   "keywords": [
     "react",
     "javascript",
-    "admin",
-    "dashboard",
     "material-design",
     "nextjs",
     "material-ui",
-    "admin-dashboard",
-    "free",
-    "mui",
-    "admin-template",
-    "admin-panel",
-    "freebies",
-    "nextjs-template",
-    "react-dashboard",
-    "themeselection"
+    "drugs",
+    "herbal",
+    "NodeJS",
+    "ExpressJS",
+    "MongoDB"
   ],
   "scripts": {
     "dev": "next dev",
