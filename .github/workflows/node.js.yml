@@ -20,33 +20,6 @@ on:
       - main
 
 jobs:
-  frontend:
-
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18.18.0]
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'yarn'
-
-    - name: Install frontend dependencies
-      run: yarn install
-
-    - name: Build frontend
-      run: yarn build
-
-    - name: Run frontend tests
-      run: yarn test
-
   backend:
 
     runs-on: ubuntu-latest
@@ -86,5 +59,33 @@ jobs:
       run: |
         cd server
         node server.js
+
+  frontend:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.18.0]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'yarn'
+
+    - name: Install frontend dependencies
+      run: yarn install
+
+    - name: Build frontend
+      run: yarn build
+
+    - name: Run frontend tests
+      run: yarn test
+
 
 
