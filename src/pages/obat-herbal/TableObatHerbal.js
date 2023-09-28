@@ -92,7 +92,7 @@ const TableObatHerbal = () => {
   const handleDetailClick = (namaObat) => {
     // Construct the link with the target="_blank" attribute
     return (
-      <Link href={`/detail-obat-generik?namaObat=${namaObat}`} passHref>
+      <Link href={`/detail-obat-herbal?namaObat=${namaObat}`} passHref>
         <a target="_blank">
           <Button variant='contained' color='primary'>
             Detail
