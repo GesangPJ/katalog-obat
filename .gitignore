@@ -1,6 +1,9 @@
 # Backup
 .bak
 
+#Unnecessary Dir
+
+
 # Logs
 logs
 *.log
