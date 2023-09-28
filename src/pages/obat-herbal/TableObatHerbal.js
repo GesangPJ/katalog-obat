@@ -1,120 +1,202 @@
-// ** React Imports
-import { useState } from 'react'
-
-// ** MUI Imports
-import Paper from '@mui/material/Paper'
-import Table from '@mui/material/Table'
-import TableRow from '@mui/material/TableRow'
-import TableHead from '@mui/material/TableHead'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TablePagination from '@mui/material/TablePagination'
+import { useState, useEffect } from 'react';
+import Button from '@mui/material/Button';
+import Link from 'next/dist/client/link';
+import { useRouter } from 'next/router';
+import Paper from '@mui/material/Paper';
+import Table from '@mui/material/Table';
+import TableRow from '@mui/material/TableRow';
+import TableHead from '@mui/material/TableHead';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TablePagination from '@mui/material/TablePagination';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 
 const columns = [
-  { id: 'nama', label: 'Nama Tanaman', minWidth: 170 },
-  { id: 'komposisi', label: 'Komposisi', minWidth: 100 },
+  { id: 'namaObat', label: 'Nama Obat', minWidth: 170, sortable: true },
+  { id: 'komposisi', label: 'Komposisi', minWidth: 100, sortable: true },
+  { id: 'latin', label: 'latin', minWidth: 100, sortable: true },
   {
-    id: 'kegunaan',
-    label: 'Kegunaan Utama',
+    id: 'kegunaanUtama',
+    label: 'Manfaat Utama',
     minWidth: 170,
-    align: 'right',
-    format: value => value.toLocaleString('en-US')
-  },
-  {
-    id: 'pemakaian',
-    label: 'Cara Pemakaian',
-    minWidth: 170,
-    align: 'right',
-    format: value => value.toLocaleString('en-US')
+    align: 'left',
+    sortable: true,
   },
   {
     id: 'aksi',
-    label: 'Detail',
+    label: 'Lihat Detail',
     minWidth: 170,
     align: 'right',
-    format: value => value.toFixed(2)
-  }
-]
-function createData(nama, komposisi, kegunaan, pemakaian, aksi) {
+    format: (value) => value.toFixed(2),
+    sortable: false, // No sorting for this column
+  },
+];
 
+function createData(namaObat, komposisi, latin, kegunaanUtama) {
+  return { namaObat, komposisi, latin, kegunaanUtama };
+}
+function stableSort(array, comparator) {
+  const stabilizedThis = array.map((el, index) => [el, index]);
+  stabilizedThis.sort((a, b) => {
+    const order = comparator(a[0], b[0]);
+    if (order !== 0) return order;
 
-  return { nama, komposisi, kegunaan, pemakaian, aksi }
+    return a[1] - b[1];
+  });
+
+  return stabilizedThis.map((el) => el[0]);
 }
 
-const rows = [
-  createData('Italy', 'IT', 60483973, 301340),
-  createData('United States', 'US', 327167434, 9833520),
-  createData('Canada', 'CA', 37602103, 9984670),
-  createData('Australia', 'AU', 25475400, 7692024),
-  createData('Germany', 'DE', 83019200, 357578),
-  createData('Ireland', 'IE', 4857000, 70273),
-  createData('Mexico', 'MX', 126577691, 1972550),
-  createData('Japan', 'JP', 126317000, 377973),
-  createData('France', 'FR', 67022000, 640679),
-  createData('United Kingdom', 'GB', 67545757, 242495),
-  createData('Russia', 'RU', 146793744, 17098246),
-  createData('Nigeria', 'NG', 200962417, 923768),
-  createData('Brazil', 'BR', 210147125, 8515767)
-]
+// Get sorting order (asc or desc)
+function getComparator(order, orderBy) {
+  return order === 'desc'
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
+function descendingComparator(a, b, orderBy) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+
+  return 0;
+}
 
 const TableObatHerbal = () => {
   // ** States
-  const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [data, setData] = useState([]); // Declare data state
+  const [sorting, setSorting] = useState({ column: 'namaObat', direction: 'asc' });
+  const router = useRouter();
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage)
-  }
+    setPage(newPage);
+  };
 
-  const handleChangeRowsPerPage = event => {
-    setRowsPerPage(+event.target.value)
-    setPage(0)
-  }
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
+  const handleSort = (columnId) => {
+    const isAsc = sorting.column === columnId && sorting.direction === 'asc';
+    setSorting({ column: columnId, direction: isAsc ? 'desc' : 'asc' });
+  };
+
+  const handleDetailClick = (namaObat) => {
+    // Construct the link with the target="_blank" attribute
+    return (
+      <Link href={`/detail-obat?namaObat=${namaObat}`} passHref>
+        <a target="_blank">
+          <Button variant='contained' color='primary'>
+            Detail
+          </Button>
+        </a>
+      </Link>
+    );
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/api/obat-herbal');
+        if (response.ok) {
+          const result = await response.json();
+          setData(result); // Update data state
+        } else {
+          console.error('Error fetching obat herbal data.');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const rows = data.map((row) => createData(row.namaObat, row.komposisi, row.latin, row.kegunaanUtama));
+
+  // Sorting function
+  const sortedData = stableSort(rows, getComparator(sorting.direction, sorting.column));
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label='sticky table'>
+        <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
-              {columns.map(column => (
-                <TableCell key={column.id} align={column.align} sx={{ minWidth: column.minWidth }}>
-                  {column.label}
+              {columns.map((column) => (
+                <TableCell
+                  key={column.id}
+                  align={column.align}
+                  sx={{ minWidth: column.minWidth }}
+                >
+                  <div
+                    style={{ display: 'flex', alignItems: 'center' }}
+                    onClick={() => column.sortable && handleSort(column.id)}
+                  >
+                    {column.label}
+                    {column.sortable && (
+                      <div style={{ display: 'flex', flexDirection: 'column', marginLeft: '4px' }}>
+                        {column.sortable && (
+                          <div style={{ height: '24px' }}>
+                            {sorting.column === column.id && sorting.direction === 'asc' && (
+                              <ArrowUpwardIcon fontSize="small" />
+                            )}
+                            {sorting.column === column.id && sorting.direction === 'desc' && (
+                              <ArrowDownwardIcon fontSize="small" />
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
                 </TableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
-              return (
-                <TableRow hover role='checkbox' tabIndex={-1} key={row.code}>
-                  {columns.map(column => {
-                    const value = row[column.id]
-
+            {sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+              <TableRow hover role="checkbox" tabIndex={-1} key={row.namaObat}>
+                {columns.map((column) => {
+                  const value = row[column.id];
+                  if (column.id === 'aksi') {
                     return (
                       <TableCell key={column.id} align={column.align}>
                         {column.format && typeof value === 'number' ? column.format(value) : value}
+                        {handleDetailClick(row.namaObat)}
                       </TableCell>
-                    )
-                  })}
-                </TableRow>
-              )
-            })}
+                    );
+                  }
+
+                  return (
+                    <TableCell key={column.id} align={column.align}>
+                      {column.format && typeof value === 'number' ? column.format(value) : value}
+                    </TableCell>
+                  );
+                })}
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
-        component='div'
-        count={rows.length}
+        component="div"
+        count={data.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </Paper>
-  )
+  );
 }
 
-export default TableObatHerbal
+export default TableObatHerbal;
