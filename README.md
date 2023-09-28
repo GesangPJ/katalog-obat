@@ -9,12 +9,17 @@ Website Katalog Obat berbasis React NextJS dan Backend Express JS.
 <img src="https://github.com/GesangPJ/katalog-obat/blob/main/data/img/obat-generik-tab.jpg" width = "550" height = "300" >
 Tabel menampilkan obat generik
 
-### 2. Form Tambah Obat Generik
+### 2. Dark Mode
+
+<img src="https://github.com/GesangPJ/katalog-obat/blob/main/data/img/dark-mode.jpg" width = "550" height = "300" >
+Dark Mode
+
+### 3. Form Tambah Obat Generik
 
 <img src="https://github.com/GesangPJ/katalog-obat/blob/main/data/img/tambah-obat-generik.jpg" width = "550" height = "300" >
 Form menambah obat generik
 
-### 3. Detail Obat Generik
+### 4. Detail Obat Generik
 
 <img src="https://github.com/GesangPJ/katalog-obat/blob/main/data/img/detail-obat-generik.jpg" width = "550" height = "300" >
 Halaman Detail Obat Generik
