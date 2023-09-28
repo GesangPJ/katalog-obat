@@ -19,7 +19,7 @@ const ObatHerbal = () => {
             Tabel Obat Herbal
           </Link>
         </Typography>
-        <Typography variant='body2'>Nama tanaman, kegunaan, komposisi, cara pemakaian</Typography>
+        <Typography variant='body2'></Typography>
       </Grid>
       <Grid item xs={12}>
         <Card>
