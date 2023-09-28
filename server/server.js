@@ -60,7 +60,7 @@ app.get('/api/obat-generik', async (req, res) => {
   }
 });
 
-// Ambil Detail Data Obat berdasarkan row yang dipilih user
+// Ambil Detail Data Obat Generik berdasarkan row yang dipilih user
 app.get('/api/obat-generik/:namaObat', async (req, res) => {
   const { namaObat } = req.params;
 
@@ -97,6 +97,41 @@ app.post('/api/add-obat-herbal', async (req, res) => {
     res.status(201).json({ message: 'Obat herbal berhasil ditambahkan' });
   } catch (error) {
     console.error('Error adding obat herbal:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// Ambil data obat herbal dari MongoDB
+app.get('/api/obat-herbal', async (req, res) => {
+  try {
+    const db = await connectToMongoDB();
+    const obatHerbalCollection = db.collection('obat_herbal');
+    const data = await obatHerbalCollection.find({}).toArray();
+    res.json(data);
+  } catch (error) {
+    console.error('Error fetching obat herbal data:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// Ambil Detail Data Obat Herbal berdasarkan row yang dipilih user
+app.get('/api/obat-herbal/:namaObat', async (req, res) => {
+  const { namaObat } = req.params;
+
+  try {
+    const db = await connectToMongoDB();
+    const obatGenerikCollection = db.collection('obat_herbal');
+
+    // Nemuin obat pake nama obat
+    const obat = await obatGenerikCollection.findOne({ namaObat });
+
+    if (!obat) {
+      return res.status(404).json({ error: 'Nama Obat Tidak Ditemukan' });
+    }
+
+    res.json(obat);
+  } catch (error) {
+    console.error('Error fetching obat generik data:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
