@@ -27,7 +27,8 @@ Halaman Detail Obat Generik
 2. npm install atau yarn install
 3. ke /server lalu ubah "file_env" menjadi .env
 4. Masukkan URI MongoDB anda kedalam MONGODB_URI di file .env sebelumnya
-5. Jalankan backed dengan masuk ke folder server dan command "node server.js"
-6. Jalankan website dengan command "yarn dev" pada root project
-7. Buka pada alamat "http://localhost:3000" atau "http://127.0.0.1:3000"
-8. Untuk Backend, url adalah "http://localhost:3001"
+5. Import JSON pada /data/json ke MongoDB anda (collections = "obat_generik", "obat_herbal")
+6. Jalankan backed dengan masuk ke folder server dan command "node server.js"
+7. Jalankan website dengan command "yarn dev" pada root project
+8. Buka pada alamat "http://localhost:3000" atau "http://127.0.0.1:3000"
+9. Untuk Backend, url adalah "http://localhost:3001"
