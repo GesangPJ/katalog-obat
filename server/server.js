@@ -37,7 +37,7 @@ app.post('/api/add-obat-generik', async (req, res) => {
     const db = await connectToMongoDB();
     const obatGenerikCollection = db.collection('obat_generik');
 
-    // Insert the data into the "obat_generik" collection, including the 'formula' field
+    // Masukkan data obat generik ke collection MongoDB
     await obatGenerikCollection.insertOne({ namaObat, komposisi, kegunaanUtama, deskripsi, formula });
 
     res.status(201).json({ message: 'Obat added successfully' });
@@ -61,7 +61,6 @@ app.get('/api/obat-generik', async (req, res) => {
 });
 
 // Ambil Detail Data Obat berdasarkan row yang dipilih user
-// Ambil Detail Data Obat berdasarkan row yang dipilih user
 app.get('/api/obat-generik/:namaObat', async (req, res) => {
   const { namaObat } = req.params;
 
@@ -69,8 +68,7 @@ app.get('/api/obat-generik/:namaObat', async (req, res) => {
     const db = await connectToMongoDB();
     const obatGenerikCollection = db.collection('obat_generik');
 
-    // Find the obat by _id
-    //const obat = await obatGenerikCollection.findOne({ _id });
+    // Nemuin obat pake nama obat
     const obat = await obatGenerikCollection.findOne({ namaObat });
 
     if (!obat) {
@@ -80,6 +78,25 @@ app.get('/api/obat-generik/:namaObat', async (req, res) => {
     res.json(obat);
   } catch (error) {
     console.error('Error fetching obat generik data:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// Kirim (POST) data obat_herbal ke MongoDB
+app.post('/api/add-obat-herbal', async (req, res) => {
+
+  const { namaObat, komposisi, kegunaanUtama, deskripsi, latin } = req.body;
+
+  try {
+    const db = await connectToMongoDB();
+    const obatHerbalCollection = db.collection('obat_herbal');
+
+    // memasukkan data Obat Herbal ke Collection MongoDB
+    await obatHerbalCollection.insertOne({ namaObat, komposisi, kegunaanUtama, deskripsi, latin });
+
+    res.status(201).json({ message: 'Obat herbal berhasil ditambahkan' });
+  } catch (error) {
+    console.error('Error adding obat herbal:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
