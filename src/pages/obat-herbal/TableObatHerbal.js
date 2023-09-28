@@ -15,8 +15,8 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 
 const columns = [
   { id: 'namaObat', label: 'Nama Obat', minWidth: 170, sortable: true },
-  { id: 'komposisi', label: 'Komposisi', minWidth: 100, sortable: true },
   { id: 'latin', label: 'Nama Latin', minWidth: 100, sortable: true },
+  { id: 'komposisi', label: 'Komposisi', minWidth: 100, sortable: true },
   {
     id: 'kegunaanUtama',
     label: 'Manfaat Utama',
