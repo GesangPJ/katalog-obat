@@ -1,21 +1,17 @@
 {
   "name": "katalog-obat-nextjs",
-  "description": "Most Powerful & Comprehensive Free MUI React NextJS Admin Dashboard Template built for developers! 🚀",
+  "description": "NodeJS Website menampilkan data obat generik dan herbal",
   "license": "Creative-Commons",
   "version": "1.0.0",
   "author": {
     "name": "GPAUDRA",
-    "url": "https://themeselection.com/"
-  },
-  "bugs": {
-    "url": "https://github.com/themeselection/materio-mui-react-nextjs-admin-template-free/issues"
+    "url": "https://github.com/GesangPJ"
   },
   "private": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/themeselection/materio-mui-react-nextjs-admin-template-free.git"
+    "url": "https://github.com/GesangPJ/katalog-obat.git"
   },
-  "homepage": "https://themeselection.com/products/materio-free-mui-react-nextjs-admin-template/",
   "keywords": [
     "react",
     "javascript",
