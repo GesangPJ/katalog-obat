@@ -1,4 +1,4 @@
-# KATALOG OBAT
+# KATALOG OBAT [Early BETA]
 
 Website Katalog Obat berbasis React NextJS dan Backend Express JS.
 
