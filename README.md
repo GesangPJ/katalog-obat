@@ -13,3 +13,8 @@ Tabel menampilkan obat generik
 
 <img src="https://github.com/GesangPJ/katalog-obat/blob/main/data/img/tambah-obat-generik.jpg" width = "550" height = "300" >
 Form menambah obat generik
+
+### 2. Detail Obat Generik
+
+<img src="https://github.com/GesangPJ/katalog-obat/blob/main/data/img/detail-obat-generik.jpg" width = "550" height = "300" >
+Halaman Detail Obat Generik
