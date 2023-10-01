@@ -4,6 +4,12 @@ const cors = require('cors');
 
 const app = express();
 
+const corsOptions = {
+  origin: 'http://localhost:3000', // Replace with the actual URL of your frontend.
+  optionsSuccessStatus: 200, // Some legacy browsers (IE11, various SmartTVs) choke on 204.
+};
+app.use(cors(corsOptions));
+
 // Express JS
 app.use(express.json());
 app.use(cors());
