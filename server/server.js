@@ -8,6 +8,35 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+// Search function
+app.get('/api/search/:term', async (req, res) => {
+  const { term } = req.params;
+
+  try {
+    const db = await connectToMongoDB();
+    const obatGenerikCollection = db.collection('obat_generik');
+    const obatHerbalCollection = db.collection('obat_herbal');
+
+    const generikResults = await obatGenerikCollection.find({
+      $or: [
+        { namaObat: { $regex: term, $options: 'i' } },
+        { komposisi: { $regex: term, $options: 'i' } },
+      ],
+    }).toArray();
+
+    const herbalResults = await obatHerbalCollection.find({
+      $or: [
+        { namaObat: { $regex: term, $options: 'i' } },
+        { komposisi: { $regex: term, $options: 'i' } },
+      ],
+    }).toArray();
+
+    res.json({ obatGenerik: generikResults, obatHerbal: herbalResults });
+  } catch (error) {
+    console.error('Error searching for obat:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+})
 
 // Cek Status koneksi MongoDB
 app.get('/api/mongodb-status', async (req, res) => {
