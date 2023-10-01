@@ -28,7 +28,7 @@ const AppBarContent = (props) => {
             <Menu />
           </IconButton>
         ) : null}
-        <SearchBar /> {/* Include the SearchBar component here */}
+        <SearchBar /> {/* New Custom Search Bar */}
       </Box>
       <Box className="actions-right" sx={{ display: 'flex', alignItems: 'center' }}>
         <ModeToggler settings={settings} saveSettings={saveSettings} />

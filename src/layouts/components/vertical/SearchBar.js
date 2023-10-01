@@ -17,7 +17,7 @@ const SearchBar = () => {
   return (
     <div>
       <TextField
-        label="Search"
+        label="Cari"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         size="small"
