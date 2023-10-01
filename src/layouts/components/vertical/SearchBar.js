@@ -10,14 +10,29 @@ const SearchBar = () => {
   const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
-    // Make an API request for search results and update the state
-    // You can use axios or the fetch API for this.
+    // Function to send the search term to the API
+    const sendSearchRequest = async () => {
+      try {
+        const response = await fetch(`http://localhost:3001/api/search/${searchTerm}`);
+        if (response.ok) {
+          const data = await response.json();
+          setSearchResults(data);
+        } else {
+          console.error('Error fetching search results');
+        }
+      } catch (error) {
+        console.error('Error sending search request:', error);
+      }
+    };
+
+    // Call the API when the search term changes
+    sendSearchRequest();
   }, [searchTerm]);
 
   return (
     <div>
       <TextField
-        label="Cari"
+        label="Search"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         size="small"
