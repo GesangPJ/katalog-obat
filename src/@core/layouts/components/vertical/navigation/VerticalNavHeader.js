@@ -45,7 +45,7 @@ const VerticalNavHeader = props => {
       {userVerticalNavMenuBranding ? (
         userVerticalNavMenuBranding(props)
       ) : (
-        <Link href='/obat-generik' passHref>
+        <Link href='/' passHref>
           <StyledLink>
             <img
               alt="Icon Katalog Obat"
