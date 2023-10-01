@@ -7,12 +7,12 @@ import { Link } from 'next/link';
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchResults, setSearchResults] = useState({ obatGenerik: [], obatHerbal: [] });
+  const [searchResults, setSearchResults] = useState({ obatGenerik: [], obatHerbal: [] })
 
   useEffect(() => {
     const sendSearchRequest = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/api/search/${searchTerm}`);
+        const response = await fetch(`http://localhost:3001/api/search/${searchTerm}`)
         if (response.ok) {
           const data = await response.json();
           setSearchResults(data);
@@ -20,16 +20,15 @@ const SearchBar = () => {
           console.error('Error fetching search results');
         }
       } catch (error) {
-        console.error('Error sending search request:', error);
+        console.error('Error sending search request:', error)
       }
-    };
-
+    }
     if (searchTerm.trim() !== '') {
       sendSearchRequest();
     } else {
-      setSearchResults({ obatGenerik: [], obatHerbal: [] });
+      setSearchResults({ obatGenerik: [], obatHerbal: [] })
     }
-  }, [searchTerm]);
+  }, [searchTerm])
 
   return (
     <div>
@@ -60,7 +59,7 @@ const SearchBar = () => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SearchBar;
+export default SearchBar
