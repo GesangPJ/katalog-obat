@@ -10,13 +10,16 @@ const SearchBar = () => {
   const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
-    // Function to send the search term to the API
     const sendSearchRequest = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/api/search/${searchTerm}`);
+        const response = await fetch(`/api/search/${searchTerm}`);
         if (response.ok) {
           const data = await response.json();
-          setSearchResults(data);
+          if (Array.isArray(data)) {
+            setSearchResults(data);
+          } else {
+            console.error('API response is not an array:', data);
+          }
         } else {
           console.error('Error fetching search results');
         }
@@ -25,7 +28,6 @@ const SearchBar = () => {
       }
     };
 
-    // Call the API when the search term changes
     sendSearchRequest();
   }, [searchTerm]);
 
