@@ -39,6 +39,7 @@ const LayoutAppBar = props => {
 
   return (
     <AppBar elevation={0} color='default' className='layout-navbar' position='static'>
+
       <Toolbar
         className='navbar-content-container'
         sx={{
