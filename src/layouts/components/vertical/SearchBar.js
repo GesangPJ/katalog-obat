@@ -1,3 +1,4 @@
+// SearchBar.js
 import React, { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -6,7 +7,7 @@ import { Link } from 'next/link';
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState({ obatGenerik: [], obatHerbal: [] });
 
   useEffect(() => {
     const sendSearchRequest = async () => {
@@ -14,11 +15,7 @@ const SearchBar = () => {
         const response = await fetch(`/api/search/${searchTerm}`);
         if (response.ok) {
           const data = await response.json();
-          if (Array.isArray(data)) {
-            setSearchResults(data);
-          } else {
-            console.error('API response is not an array:', data);
-          }
+          setSearchResults(data);
         } else {
           console.error('Error fetching search results');
         }
@@ -27,7 +24,11 @@ const SearchBar = () => {
       }
     };
 
-    sendSearchRequest();
+    if (searchTerm.trim() !== '') {
+      sendSearchRequest();
+    } else {
+      setSearchResults({ obatGenerik: [], obatHerbal: [] });
+    }
   }, [searchTerm]);
 
   return (
@@ -47,12 +48,15 @@ const SearchBar = () => {
         }}
       />
       <div>
-        {searchResults.map((result) => (
-          <div key={result.namaObat}>
-            <Link href={`/detail-obat-generik?namaObat=${result.namaObat}`} passHref>
-              {result.namaObat}
-            </Link>
-          </div>
+        {searchResults.obatGenerik.map((result) => (
+          <Link key={result.namaObat} href={`/detail-obat-generik?namaObat=${result.namaObat}`} passHref>
+            <a>{result.namaObat}</a>
+          </Link>
+        ))}
+        {searchResults.obatHerbal.map((result) => (
+          <Link key={result.namaObat} href={`/detail-obat-herbal?namaObat=${result.namaObat}`} passHref>
+            <a>{result.namaObat}</a>
+          </Link>
         ))}
       </div>
     </div>
