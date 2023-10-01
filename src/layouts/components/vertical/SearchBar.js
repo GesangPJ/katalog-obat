@@ -12,7 +12,7 @@ const SearchBar = () => {
   useEffect(() => {
     const sendSearchRequest = async () => {
       try {
-        const response = await fetch(`/api/search/${searchTerm}`);
+        const response = await fetch(`http://localhost:3001/api/search/${searchTerm}`);
         if (response.ok) {
           const data = await response.json();
           setSearchResults(data);
